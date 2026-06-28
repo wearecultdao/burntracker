@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://cdn.jsdelivr.net; style-src 'self' https://fonts.googleapis.com 'unsafe-inline'; font-src https://fonts.gstatic.com; connect-src 'self' https://rpc.mevblocker.io https://cloudflare-eth.com https://ethereum.publicnode.com https://1rpc.io https://eth.drpc.org; object-src 'none'; base-uri 'none';">
+    <title>CULT DAO | Burn Tracker</title>
+    <script src="https://cdn.jsdelivr.net/npm/ethers@5.7.2/dist/ethers.umd.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <canvas id="matrix-fire-background" class="matrix-fire-background" aria-hidden="true"></canvas>
+    <div class="container">
+        <header class="header">
+            <div>
+                <p class="eyebrow">CULT DAO</p>
+                <h1>Burn Tracker</h1>
+            </div>
+            <div class="header-actions">
+                <button id="refresh-btn" class="icon-button" type="button" title="Refresh" aria-label="Refresh">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 256 256" fill="currentColor" aria-hidden="true">
+                        <path d="M232,120a8,8,0,0,1-8,8H200a8,8,0,0,1-8-8,64,64,0,1,0-18.75,45.25,8,8,0,0,1,11.31,11.31A80,80,0,1,1,208,120h16A8,8,0,0,1,232,120Zm-24-56a8,8,0,0,0-8,8v24H176a8,8,0,0,0,0,16h32a8,8,0,0,0,8-8V72A8,8,0,0,0,208,64Z"/>
+                    </svg>
+                </button>
+                <button id="shuffle-theme-btn" class="icon-button" type="button" title="Shuffle Experience" aria-label="Shuffle Experience">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 256 256" fill="currentColor" aria-hidden="true">
+                        <path d="M237.66,178.34a8,8,0,0,1,0,11.32l-24,24a8,8,0,0,1-11.32-11.32L212.69,192H200.94a72.12,72.12,0,0,1-58.59-30.15l-41.72-58.4A56.1,56.1,0,0,0,55.06,80H32a8,8,0,0,1,0-16H55.06a72.12,72.12,0,0,1,58.59,30.15l41.72,58.4A56.1,56.1,0,0,0,200.94,176h11.75l-10.35-10.34a8,8,0,0,1,11.32-11.32ZM143,107a8,8,0,0,0,11.16-1.86l1.2-1.67A56.1,56.1,0,0,1,200.94,80h11.75L202.34,90.34a8,8,0,0,0,11.32,11.32l24-24a8,8,0,0,0,0-11.32l-24-24a8,8,0,0,0-11.32,11.32L212.69,64H200.94a72.12,72.12,0,0,0-58.59,30.15l-1.2,1.67A8,8,0,0,0,143,107Zm-30,42a8,8,0,0,0-11.16,1.86l-1.2,1.67A56.1,56.1,0,0,1,55.06,176H32a8,8,0,0,0,0,16H55.06a72.12,72.12,0,0,0,58.59-30.15l1.2-1.67A8,8,0,0,0,113,149Z"/>
+                    </svg>
+                </button>
+                <button id="theme-toggle" class="icon-button" type="button" title="Switch Mood" aria-label="Switch Mood">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 256 256" fill="currentColor" aria-hidden="true">
+                        <path d="M200.77,53.89A103.27,103.27,0,0,0,128,24h-1.07A104,104,0,0,0,24,128c0,43,26.58,79.06,69.36,94.17A32,32,0,0,0,136,192a16,16,0,0,1,16-16h46.21a31.81,31.81,0,0,0,31.2-24.88,104.43,104.43,0,0,0,2.59-24A103.28,103.28,0,0,0,200.77,53.89ZM213.81,147.7A15.89,15.89,0,0,1,198.21,160H152a32,32,0,0,0-32,32,16,16,0,0,1-21.31,15.07C62.49,194.3,40,164,40,128a88,88,0,0,1,87.09-88h.9a88.35,88.35,0,0,1,88,87.25A88.86,88.86,0,0,1,213.81,147.7ZM140,76a12,12,0,1,1-12-12A12,12,0,0,1,140,76ZM96,100A12,12,0,1,1,84,88,12,12,0,0,1,96,100Zm0,56a12,12,0,1,1-12-12A12,12,0,0,1,96,156Zm88-56a12,12,0,1,1-12-12A12,12,0,0,1,184,100Z"/>
+                    </svg>
+                </button>
+                <div class="menu-widget">
+                    <button id="menu-toggle" class="icon-button" type="button" title="Menu" aria-label="Menu" aria-expanded="false">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 256 256" fill="currentColor" aria-hidden="true">
+                            <path d="M224,128a8,8,0,0,1-8,8H40a8,8,0,0,1,0-16H216A8,8,0,0,1,224,128ZM40,72H216a8,8,0,0,0,0-16H40a8,8,0,0,0,0,16ZM216,184H40a8,8,0,0,0,0,16H216a8,8,0,0,0,0-16Z"/>
+                        </svg>
+                    </button>
+                    <div id="utility-menu" class="utility-menu" aria-label="Burn tracker menu">
+                        <a class="menu-item" href="https://etherscan.io/token/0xf0f9d895aca5c8678f706fb8216fa22957685a13" target="_blank" rel="noopener noreferrer" title="Opens the CULT token contract on Etherscan.">
+                            <span class="menu-label">CULT token</span>
+                            <span class="menu-hint">Opens the token contract on Etherscan.</span>
+                        </a>
+                        <a class="menu-item" href="https://etherscan.io/address/0x000000000000000000000000000000000000dEaD" target="_blank" rel="noopener noreferrer" title="Opens Burn Wallet 1 on Etherscan.">
+                            <span class="menu-label">Burn Wallet 1</span>
+                            <span class="menu-hint">Opens this burn address on Etherscan.</span>
+                        </a>
+                        <a class="menu-item" href="https://etherscan.io/address/0xdEAD000000000000000042069420694206942069" target="_blank" rel="noopener noreferrer" title="Opens Burn Wallet 2 on Etherscan.">
+                            <span class="menu-label">Burn Wallet 2</span>
+                            <span class="menu-hint">Opens this burn address on Etherscan.</span>
+                        </a>
+                        <button id="reset-cache-btn" class="menu-item menu-action" type="button" title="Rebuild the local burn-event index if the data feels wrong.">
+                            <span class="menu-label">Rebuild index</span>
+                            <span class="menu-hint">Use if the event data feels wrong.</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <main class="dapp-content">
+            <section class="ui-section hero-section" aria-labelledby="burn-overview-title">
+                <div class="section-heading">
+                    <div>
+                        <h2 id="burn-overview-title">Burned CULT Supply</h2>
+                    </div>
+                </div>
+
+                <div class="info-grid">
+                    <div class="info-item wide-metric">
+                        <h3>Total Burned CULT</h3>
+                        <span id="total-burned" class="value main-value">...</span>
+                    </div>
+                    <div class="info-item burned-percent-item">
+                        <h3>Burned %</h3>
+                        <span id="burn-percent" class="value">...</span>
+                        <div class="minibar burn-minibar" aria-hidden="true"><div id="burn-percent-bar" class="fill burn-fill"></div></div>
+                    </div>
+                    <div class="info-item">
+                        <h3>Total Supply</h3>
+                        <span id="total-supply" class="value">...</span>
+                    </div>
+                </div>
+
+            </section>
+
+            <div class="two-column">
+                <section class="ui-section" aria-labelledby="recent-title">
+                    <div class="section-heading">
+                        <h2 id="recent-title">Last 10 Burns</h2>
+                    </div>
+                    <div id="recent-burns" class="event-list">
+                        <p class="empty-state">...</p>
+                    </div>
+                </section>
+
+                <section class="ui-section" aria-labelledby="leaderboard-title">
+                    <div class="section-heading">
+                        <h2 id="leaderboard-title">Top 10 Burners</h2>
+                    </div>
+                    <div id="leaderboard" class="leaderboard-list">
+                        <p class="empty-state">...</p>
+                    </div>
+                </section>
+            </div>
+        </main>
+    </div>
+
+    <script src="matrix-fire-background.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
