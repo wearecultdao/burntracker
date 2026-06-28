@@ -130,6 +130,59 @@ h3 {
     text-transform: none;
 }
 
+.info-label-with-tooltip {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.info-tooltip {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 16px;
+    height: 16px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.08);
+    color: var(--color-muted);
+    cursor: help;
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    line-height: 1;
+}
+
+.info-tooltip:focus {
+    outline: 1px solid var(--color-blue);
+    outline-offset: 2px;
+}
+
+.tooltip-panel {
+    position: absolute;
+    top: calc(100% + 8px);
+    left: 50%;
+    z-index: 30;
+    width: 210px;
+    border-radius: 4px;
+    background: rgba(18, 18, 18, 0.95);
+    color: var(--color-text);
+    font-family: var(--font-main);
+    font-size: 0.78rem;
+    font-weight: 400;
+    line-height: 1.35;
+    opacity: 0;
+    padding: 8px 10px;
+    pointer-events: none;
+    transform: translate(-50%, -2px);
+    transition: opacity 0.15s ease, transform 0.15s ease;
+}
+
+.info-tooltip:hover .tooltip-panel,
+.info-tooltip:focus .tooltip-panel {
+    opacity: 1;
+    transform: translate(-50%, 0);
+}
+
 .dapp-content {
     display: grid;
     gap: 0;
