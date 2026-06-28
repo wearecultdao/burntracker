@@ -54,9 +54,13 @@
                             <span class="menu-label">Burn Wallet 2</span>
                             <span class="menu-hint">Opens this burn address on Etherscan.</span>
                         </a>
-                        <button id="reset-cache-btn" class="menu-item menu-action" type="button" title="Rebuild the local burn-event index if the data feels wrong.">
+                        <a class="menu-item" href="https://etherscan.io/address/0x2d77b594b9bbaed03221f7c63af8c4307432daf1" target="_blank" rel="noopener noreferrer" title="Opens the dCULT staking contract on Etherscan.">
+                            <span class="menu-label">dCULT staking</span>
+                            <span class="menu-hint">Opens the staking and returns contract on Etherscan.</span>
+                        </a>
+                        <button id="reset-cache-btn" class="menu-item menu-action" type="button" title="Rebuild the local event index if the data feels wrong.">
                             <span class="menu-label">Rebuild index</span>
-                            <span class="menu-hint">Use if the event data feels wrong.</span>
+                            <span class="menu-hint">Use if the burn or return data feels wrong.</span>
                         </button>
                     </div>
                 </div>
@@ -76,6 +80,10 @@
                         <h3>Total Burned CULT</h3>
                         <span id="total-burned" class="value main-value">...</span>
                     </div>
+                    <div class="info-item wide-metric">
+                        <h3>Contributed CULT</h3>
+                        <span id="total-contributed" class="value main-value">...</span>
+                    </div>
                     <div class="info-item burned-percent-item">
                         <h3>Burned %</h3>
                         <span id="burn-percent" class="value">...</span>
@@ -89,17 +97,30 @@
 
             </section>
 
+            <section class="ui-section latest-burns-section" aria-labelledby="recent-title">
+                <h2 id="recent-title" class="latest-title">
+                    <button id="latest-toggle" class="section-toggle" type="button" aria-expanded="false" aria-controls="recent-burns">
+                        <span>Latest Burn</span>
+                        <span id="latest-toggle-label" class="section-toggle-meta">Show all 10</span>
+                        <span class="section-toggle-icon" aria-hidden="true">&#9662;</span>
+                    </button>
+                </h2>
+                <div id="recent-burns" class="event-list compact-event-list">
+                    <p class="empty-state">...</p>
+                </div>
+            </section>
+
             <div class="two-column">
-                <section class="ui-section" aria-labelledby="recent-title">
+                <section class="ui-section priority-section" aria-labelledby="returns-title">
                     <div class="section-heading">
-                        <h2 id="recent-title">Last 10 Burns</h2>
+                        <h2 id="returns-title">Top 10 Contributors</h2>
                     </div>
-                    <div id="recent-burns" class="event-list">
+                    <div id="returns-leaderboard" class="leaderboard-list">
                         <p class="empty-state">...</p>
                     </div>
                 </section>
 
-                <section class="ui-section" aria-labelledby="leaderboard-title">
+                <section class="ui-section priority-section" aria-labelledby="leaderboard-title">
                     <div class="section-heading">
                         <h2 id="leaderboard-title">Top 10 Burners</h2>
                     </div>

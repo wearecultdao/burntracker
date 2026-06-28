@@ -75,7 +75,8 @@ a {
 .container {
     position: relative;
     z-index: 1;
-    width: 70%;
+    width: 76%;
+    max-width: 1360px;
     margin: 40px auto 120px auto;
     padding: 0 20px 120px 20px;
 }
@@ -149,7 +150,8 @@ h3 {
 }
 
 :root[data-theme="fire"] .hero-section,
-:root[data-theme="fire"] .two-column > .ui-section {
+:root[data-theme="fire"] .two-column > .ui-section,
+:root[data-theme="fire"] .latest-burns-section {
     background: rgba(18, 18, 18, 0.68);
 }
 
@@ -202,13 +204,13 @@ h3 {
     min-height: 22px;
     overflow-wrap: anywhere;
     font-family: var(--font-mono);
-    font-size: 0.95rem;
+    font-size: 0.9rem;
     font-weight: 600;
     line-height: 1.35;
 }
 
 .main-value {
-    font-size: 1.08rem;
+    font-size: 0.9rem;
 }
 
 .minibar,
@@ -411,11 +413,12 @@ h3 {
 
 .two-column {
     display: flex;
+    flex-wrap: wrap;
     gap: 20px;
 }
 
 .two-column > .ui-section {
-    flex: 1 1 0;
+    flex: 1 1 340px;
     min-width: 0;
 }
 
@@ -425,12 +428,68 @@ h3 {
     gap: 10px;
 }
 
+.latest-burns-section {
+    padding: 14px 20px;
+}
+
+.latest-title {
+    margin: 0 0 10px 0;
+}
+
+.section-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    min-height: 34px;
+    border: 0;
+    background: transparent;
+    color: var(--color-text);
+    cursor: pointer;
+    font-family: var(--font-main);
+    font-size: inherit;
+    font-weight: inherit;
+    line-height: inherit;
+    padding: 0;
+    text-align: left;
+}
+
+.section-toggle:disabled {
+    cursor: default;
+}
+
+.section-toggle-meta {
+    margin-left: auto;
+    color: var(--color-muted);
+    font-size: 0.82rem;
+    font-weight: 400;
+    white-space: nowrap;
+}
+
+.section-toggle-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: 10px;
+    color: var(--color-muted);
+    font-size: 0.9rem;
+    transition: transform 0.2s ease;
+}
+
+.section-toggle[aria-expanded="true"] .section-toggle-icon {
+    transform: rotate(180deg);
+}
+
+.compact-event-list {
+    grid-template-columns: 1fr;
+}
+
 .event-row,
 .leaderboard-row {
     display: grid;
     align-items: center;
     min-height: 78px;
-    height: 78px;
+    height: auto;
     border: 0;
     border-radius: 4px;
     background: rgba(255, 255, 255, 0.05);
@@ -447,8 +506,19 @@ h3 {
     grid-template-columns: minmax(126px, 0.85fr) minmax(0, 1.3fr) 36px;
 }
 
+.latest-burns-section .event-row {
+    min-height: 48px;
+    grid-template-columns: minmax(140px, 0.9fr) minmax(170px, 1fr) minmax(120px, 0.9fr) 30px;
+    padding: 10px 12px;
+}
+
+.latest-burns-section .event-date,
+.latest-burns-section .event-from {
+    white-space: nowrap;
+}
+
 .leaderboard-row {
-    grid-template-columns: 42px minmax(0, 1fr);
+    grid-template-columns: 42px minmax(0, 1fr) 30px;
 }
 
 .rank {
@@ -465,10 +535,15 @@ h3 {
     font-weight: 500;
 }
 
+.leaderboard-row:nth-child(-n + 3) .rank {
+    background: var(--color-red);
+    color: var(--color-text);
+}
+
 .event-amount,
 .leaderboard-amount {
     font-family: var(--font-mono);
-    font-size: 0.95rem;
+    font-size: 0.9rem;
     font-weight: 600;
     line-height: 1.25;
     overflow-wrap: anywhere;
@@ -478,6 +553,10 @@ h3 {
 .leaderboard-meta {
     color: var(--color-muted);
     font-size: 0.86rem;
+}
+
+.leaderboard-meta {
+    margin-top: 4px;
 }
 
 .event-meta a,
@@ -500,6 +579,7 @@ h3 {
     display: inline-flex;
     align-items: center;
     justify-content: center;
+    justify-self: end;
     width: 30px;
     height: 30px;
     color: var(--color-blue);
@@ -509,6 +589,11 @@ h3 {
 .tx-icon-link:hover {
     opacity: 0.75;
     text-decoration: none;
+}
+
+.tx-icon-link-placeholder {
+    opacity: 0;
+    pointer-events: none;
 }
 
 .empty-state {
@@ -539,6 +624,10 @@ h3 {
         flex-direction: column;
     }
 
+    .compact-event-list {
+        grid-template-columns: 1fr;
+    }
+
     .wide-metric {
         grid-column: auto;
     }
@@ -549,8 +638,13 @@ h3 {
         min-height: 110px;
     }
 
+    .latest-burns-section .event-row {
+        grid-template-columns: 1fr;
+        min-height: 110px;
+    }
+
     .leaderboard-row {
-        height: 78px;
+        min-height: 78px;
     }
 }
 
