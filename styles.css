@@ -13,7 +13,7 @@
     --color-orange: #ff9800;
     --font-main: 'hellix', 'Inter', sans-serif;
     --font-mono: 'Roboto Mono', monospace;
-    --background-image: radial-gradient(circle, #ff5252, black);
+    --background-image: radial-gradient(circle, #050505, black);
     --btn-bg: #333333;
     --wallet-dropdown-bg: var(--color-bg);
     --ui-section-blur: blur(0px);
